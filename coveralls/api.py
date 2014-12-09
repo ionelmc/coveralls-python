@@ -67,6 +67,11 @@ class Coveralls(object):
             log.debug('Missing %s file. Using only env variables.', self.config_filename)
             return {}
 
+    def merge(self, path):
+        with open(path, 'rb') as fh:
+            extra = json.load(fh)
+            self.create_data(extra)
+
     def wear(self, dry_run=False):
         """ run! """
         try:
@@ -98,7 +103,7 @@ class Coveralls(object):
                                       len(source_file['coverage'])))
         return result
 
-    def create_data(self):
+    def create_data(self, extra=None):
         """ Generate object for api.
             Example json:
             {
@@ -122,6 +127,8 @@ class Coveralls(object):
             self._data = {'source_files': self.get_coverage()}
             self._data.update(self.git_info())
             self._data.update(self.config)
+            if extra and 'source_files' in extra:
+                self._data['source_files'].extend(extra['source_files'])
         return self._data
 
     def get_coverage(self):
