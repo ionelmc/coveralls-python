@@ -26,7 +26,7 @@ setup(
             'coveralls = coveralls.cli:main',
         ],
     },
-    install_requires=['docopt>=0.6.1', 'coverage>=3.6', 'requests>=1.0.0'],
+    install_requires=['docopt>=0.6.1', 'coverage>=3.6', 'requests>=1.0.0', 'urllib3[secure]'],
     setup_requires=['pytest-runner'],
     tests_require=['mock', 'pytest', 'sh>=1.08'],
     extras_require={
